@@ -34,7 +34,7 @@
     -moz-border-top-right-radius:0px;
     -ms-border-top-right-radius:0px;
     -o-border-top-right-radius:0px;
-    background-image:url('rgba(255,255,255,1)');
+    /*background-image:url('rgba(255,255,255,1)');*/
     background-repeat:repeat;
     background-size:contain;
     overflow:visible;
