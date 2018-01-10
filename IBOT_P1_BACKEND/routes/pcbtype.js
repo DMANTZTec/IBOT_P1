@@ -5,11 +5,11 @@ var pcb1testcases=require('../config/PCB1_TESTCASES.json');
 var fs=require('fs');
 
 /* GET home page. */
-router.get('/', function(req, res, next)
+router.post('/', function(req, res, next)
 {
     req="PCBTYPE1";
-    var request = req.body.inputJsonStr;
-    console.log(request);
+    //var request = req.body.inputJsonStr;
+    //console.log(request);
     console.log(pcb.PCBS[0].PCB_TYPE);
     console.log(pcb.PCBS[0].PCB_ID);
     if(req==pcb.PCBS[0].PCB_TYPE){
