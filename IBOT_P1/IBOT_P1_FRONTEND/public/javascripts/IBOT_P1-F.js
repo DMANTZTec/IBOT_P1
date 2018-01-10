@@ -25,14 +25,11 @@ function start() {
                 document.getElementById('td_row1_col2').innerHTML=pcbtestcases[0].TESTCASE_NM;
                 document.getElementById('td_row2_col1').innerHTML=pcbtestcases[0].TESTCASE_ID;
                 document.getElementById('td_row2_col2').innerHTML=pcbtestcases[0].TESTCASE_NM;
-
             }
         };
         xhttp.send(params);
     }
 }
-
 function  clear()
 {
-
 }
