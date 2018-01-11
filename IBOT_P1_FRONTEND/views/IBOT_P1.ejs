@@ -11,11 +11,10 @@
         <button id="pcb">
             1.PCB TYPE
         </button>
-        <div id="error"></div>
         <button id="board">
             2.BOARD ID
         </button>
-        <select id="pcbtype" onclick="generateTestcases()">
+        <select id="pcbtype" onchange="generateTestcases()">
             <option value="">
                 Select PCBTYPE
             </option>
@@ -31,8 +30,8 @@
         </select>
         <div id="pcb_icon"></div>
         <input type="text" id="Board_ID" placeholder="Scan for Board ID"/>
-        <div id="scane_image"></div>
-        <button id="start" onclick="start()">START</button>
+        <div id="scane_image" onclick="scanner()"></div>
+        <button id="start" onclick="start()" disabled>START</button>
         <button id="clear" onclick="clear()">CLEAR</button>
         <table id="table">
              <tr>
