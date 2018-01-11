@@ -9,6 +9,8 @@ var cors=require('cors');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var pcbtype=require('./routes/pcbtype');
+var pcb1_typecases=require('./routes/pcb1_typecases');
+
 var app = express();
 
 // view engine setup
@@ -31,6 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/pcbtype', pcbtype);
+app.use('/pcb1_typecases', pcb1_typecases);
+
 /*var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');

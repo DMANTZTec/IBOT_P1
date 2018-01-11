@@ -11,10 +11,14 @@
         <button id="pcb">
             1.PCB TYPE
         </button>
+        <div id="error"></div>
         <button id="board">
             2.BOARD ID
         </button>
-        <select id="pcbtype">
+        <select id="pcbtype" onclick="generateTestcases()">
+            <option value="">
+                Select PCBTYPE
+            </option>
             <option>
                 PCBTYPE1
             </option>
