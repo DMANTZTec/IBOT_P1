@@ -1,0 +1,89 @@
+<html>
+<head>
+    <link rel="stylesheet" href="/stylesheets/IBOT_P1.css"/>
+   <script src="/javascripts/IBOT_P1-F.js"> </script>
+</head>
+<body>
+<div id="body">
+    <div id="Vertical_Lines">
+        <div id="Box">
+            </div>
+        <button id="pcb">
+            1.PCB TYPE
+        </button>
+        <button id="board">
+            2.BOARD ID
+        </button>
+        <select id="pcbtype">
+            <option>
+                PCBTYPE1
+            </option>
+            <option>
+                 PCBTYPE2
+            </option>
+            <option>
+                 PCBTYPE3
+            </option>
+        </select>
+        <div id="pcb_icon"></div>
+        <input type="text" id="Board_ID" placeholder="Scan for Board ID"/>
+        <div id="scane_image"></div>
+        <button id="start" onclick="start()">START</button>
+        <button id="clear" onclick="clear()">CLEAR</button>
+        <table id="table">
+             <tr>
+                 <td id="td_TID">
+
+                     <div id="div_TID">
+               <span id="span_TID">
+             TID<br/>
+         </span>
+                     </div>
+                 </td>
+                 <td id="td_TESTCASE">
+
+                     <div id="div_TESTCASE">
+               <span id="span_TESTCASE">
+             TEST CASE<br/>
+         </span>
+                     </div>
+                 </td>
+                 <td id="td_STATUS">
+
+                     <div id="div_STATUS">
+               <span id="span_STATUS">
+             STATUS<br/>
+         </span>
+                     </div>
+                 </td>
+             </tr>
+            <tr>
+                            <td id="td_row1_col1"></td>
+                            <td id="td_row1_col2"></td>
+                            <td id="td_row1_col3"></td>
+                        </tr>
+                        <tr>
+                            <td id="td_row2_col1"></td>
+                            <td id="td_row2_col2"></td>
+                            <td id="td_row2_col3"></td>
+                        </tr>
+                        <tr>
+                            <td id="td_row3_col1"></td>
+                            <td id="td_row3_col2"></td>
+                            <td id="td_row3_col3"></td>
+                        </tr>
+         </table>
+        <div id="showdata"></div>
+        <button id="success">
+            Success
+        </button>
+        <input type="text" id="success_box" placeholder="11"/>
+        <button id="fail">
+            Fail
+        </button>
+        <input type="text" id="fail_box" placeholder="00"/>
+    </div>
+
+</div>
+</body>
+</html>
