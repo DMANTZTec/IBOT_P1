@@ -32,4 +32,5 @@ function start() {
 }
 function  clear()
 {
+
 }
