@@ -24,11 +24,13 @@ function generateTestcases()
             //document.getElementById('td_row2_col1').innerHTML=pcbtestcases[1].TESTCASE_ID;
            // document.getElementById('td_row2_col2').innerHTML=pcbtestcases[1].TESTCASE_NM;
             var txt;
-            txt += "<table border='1' id='table'>" +
+
+            txt += "<table border='1'  id='table'>" +
                 "<tr><th>TID</th>" +
                 "<th>TESTCASE</th>" +
                 "<th>STATUS</th></tr>"
-            for (x in pcbtestcases) {
+           // document.getElementById("table").innerHTML += '<div class="d" style="border:1px solid";">';
+                for (x in pcbtestcases) {
                 txt += "<tr id='tr'><td>" + pcbtestcases[x].TESTCASE_ID + "</td>" +
                     "<td>" + pcbtestcases[x].TESTCASE_NM +"</td><td></td></tr>";
             }
@@ -86,9 +88,10 @@ function start()
     };
     xhttp.send(params);
 }
-function  clear()
+function  clear1()
 {
-    document.getElementById("pcbtype").reset();
-    document.getElementById("Board_ID").reset();
-
+    document.getElementById("pcbtype").value = "";
+    document.getElementById("Board_ID").value = "";
+    document.getElementById("success_box").value = "";
+    document.getElementById("fail_box").value = "";
 }

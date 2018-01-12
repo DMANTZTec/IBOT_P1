@@ -1,3 +1,6 @@
+#body{
+    overflow-y: scroll;
+}
 #start[disabled]
 {
    background-color:red;
