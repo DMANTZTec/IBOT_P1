@@ -19,10 +19,21 @@ function generateTestcases()
             var pcbtestcases = jsonresponse.PCB_TESTCASES;
             console.log(pcbtestcases);
             console.log(pcbtestcases[0].TESTCASE_ID);
-            document.getElementById('td_row1_col1').innerHTML=pcbtestcases[0].TESTCASE_ID;
-            document.getElementById('td_row1_col2').innerHTML=pcbtestcases[0].TESTCASE_NM;
-            document.getElementById('td_row2_col1').innerHTML=pcbtestcases[1].TESTCASE_ID;
-            document.getElementById('td_row2_col2').innerHTML=pcbtestcases[1].TESTCASE_NM;
+           // document.getElementById('td_row1_col1').innerHTML=pcbtestcases[0].TESTCASE_ID;
+            //document.getElementById('td_row1_col2').innerHTML=pcbtestcases[0].TESTCASE_NM;
+            //document.getElementById('td_row2_col1').innerHTML=pcbtestcases[1].TESTCASE_ID;
+           // document.getElementById('td_row2_col2').innerHTML=pcbtestcases[1].TESTCASE_NM;
+            var txt;
+            txt += "<table border='1' id='table'>" +
+                "<tr><th>TID</th>" +
+                "<th>TESTCASE</th>" +
+                "<th>STATUS</th></tr>"
+            for (x in pcbtestcases) {
+                txt += "<tr id='tr'><td>" + pcbtestcases[x].TESTCASE_ID + "</td>" +
+                    "<td>" + pcbtestcases[x].TESTCASE_NM +"</td><td></td></tr>";
+            }
+            txt += "</table>"
+            document.getElementById("showdata").innerHTML = txt;
         }
     };
     xhttp.send(params);
@@ -64,29 +75,20 @@ function start()
         if ((this.readyState == 4) && (this.status == 200))
         {
             console.log("after getting response" + xhttp.responseText);
-             var status = JSON.parse(this.responseText);
-             console.log(status);
-
-            document.getElementById('td_row1_col3').innerHTML = status[0];
-
-
-            document.getElementById('td_row2_col3').innerHTML = status[1];
-
+            var status = JSON.parse(this.responseText);
+            console.log(status);
+            console.log(status[0]);
+                for (x in status) {
+                    var table = document.getElementById("table");
+                    table.rows[x].cells[2].innerText = status[x];
+                }
         }
     };
     xhttp.send(params);
 }
 function  clear()
 {
-    document.getElementById("clear").reset();
-}
-/*function enable() {
-    if (document.getElementById("pcbtype").value != "" && document.getElementById("Board_ID").value != "") {
+    document.getElementById("pcbtype").reset();
+    document.getElementById("Board_ID").reset();
 
-        document.getElementById("start").disabled = "false";
-    }
-    else
-        {
-            document.getElementById("start").disabled = "true";
-        }
-}*/
+}
