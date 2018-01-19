@@ -3,7 +3,7 @@ function generateTestcases()
     if((document.getElementById('Board_ID').value)!="")
         document.getElementById("start").disabled = false;
     var xhttp = new XMLHttpRequest();
-    var url = "http://localhost:3001/pcbtype";
+    var url = "http://localhost:3001/loadTestcases";
     var pcbtype = {pcbtype: document.getElementById("pcbtype").value};
     var params = JSON.stringify(pcbtype);
     console.log(params);
@@ -62,7 +62,7 @@ function scanner()
 function start()
 {
     var xhttp = new XMLHttpRequest();
-    var url = "http://localhost:3001/pcb1_typecases";
+    var url = "http://localhost:3001/testing";
     var pcbtype =
         {
             pcbtype: document.getElementById("pcbtype").value

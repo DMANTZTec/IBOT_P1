@@ -16,7 +16,6 @@ router.all('/', function(req, res, next)
     console.log(pcbtypeSelected);
     console.log(pcbtypeSelected);
     console.log(testcaseSelected);
-
     //var pcbtypeSelected={pcbtype:"PCBTYPE1"};
     for(i=0;i<pcb.PCBS.length;i++) {
         if (pcbtypeSelected.pcbtype == pcb.PCBS[i].PCB_TYPE)

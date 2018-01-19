@@ -8,7 +8,7 @@ var cors=require('cors');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var IBOT_P1 = require('./routes/IBOT_P1');
-
+var IBOT_P1_v2=require('./routes/IBOT_P1_v2');
 var app = express();
 
 // view engine setup
@@ -41,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/IBOT_P1',IBOT_P1);
+app.use('/IBOT_P1_v2',IBOT_P1_v2);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

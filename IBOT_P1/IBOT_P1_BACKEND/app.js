@@ -11,6 +11,8 @@ var users = require('./routes/users');
 var loadTestcases=require('./routes/loadTestcases');
 var barcode=require('./routes/barcode');
 var testing=require('./routes/testing');
+var barcodeScanner_v2=require('./routes/barcodeScanner_v2');
+var jigType_v2=require('./routes/jigType_v2');
 
 var app = express();
 
@@ -36,7 +38,8 @@ app.use('/users', users);
 app.use('/loadTestcases', loadTestcases);
 app.use('/testing', testing);
 app.use('/barcode', barcode);
-
+app.use('/barcodeScanner_v2', barcodeScanner_v2);
+app.use('/jigType_v2',jigType_v2);
 /*var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');

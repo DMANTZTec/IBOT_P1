@@ -1,0 +1,122 @@
+<html>
+<head>
+    <link rel="stylesheet" href="stylesheets/IBOT_P1_v2.css"/>
+    <script src="javascripts/IBOT_P1_v2.js" async differ></script>
+</head>
+<body  onload="datetime()">
+<div id="document">
+<div id="vertical">
+<div id="table">
+</div>
+    <div id="Ibot"></div>
+    <button id="Test_jig" onclick="testJig()">
+        TEST JIG
+    </button>
+    <input type="text" id="currently_tested_board">
+    <div id="box">
+        <div id=date_time >Date&Time:</div>
+        <div id="ip_adress">IPadress:xxxxx</div>
+    </div>
+    <img id="setting_icon" src="images/setting.png" onclick="settings()">
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+                
+            <button id="pcb_modal">
+                1.PCB TYPE
+            </button>
+            <select id="item_modal">
+                <option>
+                    Item 1
+                </option>
+                <option>
+                    Item 2
+                </option>
+                <option>
+                    Item 3
+                </option>
+            </select>
+
+            <span class="close" onclick="closeSettingsModal()">&times;</span>
+            <button id="ok_modal" >OK</button>
+            <button id="clear_modal">CLEAR</button>
+        </div>
+    </div>
+
+
+    <svg id="svg_1">
+        <line id="line_1" x1="0" x2="670" y1="0" y2="2" />
+    </svg>
+    <button id="case">
+        Total Cases
+    </button>
+    <input type="text" id="case_text_box"/>
+    <button id="tested">
+        Tested
+    </button>
+    <input type="text" id="tested_text_box"/>
+    <button id="success">
+        Success
+    </button>
+    <input type="text" id="success_text_box"/>
+    <button id="fail">
+        Fail
+    </button>
+    <input type="text" id="fail_text_box"/>
+    <svg id="svg_2">
+        <line id="line_2" x1="0" x2="672" y1="5" y2="0" />
+    </svg>
+    <button id="sn">
+        SN:XXXXXXXX&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;MFGDT:DD-MM-YY&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;HW Ver: XXX&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SW Ver:XXX&nbsp; &nbsp;
+    </button>
+    <div id="scanner_image" onclick="barcodeScanner()"></div>
+
+    <div id="inner_table">
+    </div>
+    <div id="start_icon" onclick="startTesting()" disabled></div>
+    <div id="retry_icon" onclick="retryTesting()" disabled></div>
+    <div id="next_icon" onclick="nextTestcase()" disabled></div>
+    <button id="tc1">
+        TC1
+    </button>
+    <button id="tc2">
+        TC2
+    </button>
+    <button id="tc3">
+        TC3
+    </button>
+    <button id="tc4">
+        TC4
+    </button>
+    <button id="tc5">
+        TC5
+    </button>
+    <button id="tc6">
+        TC6
+    </button>
+    <button id="view_results" onclick="viewResults()">
+        View Results
+    </button>
+    <button id="reset" onclick="reset()">
+        Reset
+    </button>
+
+    <div id="myModal1" class="first-modal">
+        <div class="modal-content">
+            SCAN BARCODE.
+            <button id="ok_modal1" onclick="OKButtonForBarcode()">OK</button>
+
+            <span class="close1" onclick="closeBarcodeModal">&times;</span>
+
+        </div>
+    </div>
+    <!-- end of code for first modal. -->
+    <!-- code for second modal. -->
+    <div id="myModal2" class="second-modal">
+        <div class="modal_content">
+            <span class="close2" onclick="closeViewResultsModal()">&times;</span>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
