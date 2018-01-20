@@ -79,7 +79,7 @@
     overflow:visible;
 }
 
-#table {
+#TestJigHeadLine {
 
     width:683px;
     height:480px;
@@ -116,7 +116,7 @@
     -o-border-top-right-radius:15px;
     overflow:visible;
 }
-#Ibot {
+#IbotLogo {
     position: absolute;
     width:112px;
     height:48px;
@@ -313,7 +313,7 @@
     stroke:#000000;
     stroke-width:1;
 }
-#case {
+#TotalCases {
     position: absolute;
     width:106px;
     height:30px;
@@ -358,7 +358,7 @@
     color:rgba(255,255,255,1);
     line-height:0px;
 }
-#case_text_box {
+#totalCasesTxtBox {
     position: absolute;
     width:40px;
     height:30px;
@@ -693,7 +693,7 @@
     stroke: #000000;
     stroke-width: 1;
 }
-#sn {
+#BoardDetail {
     position:absolute;
     width:590px;
     height:24px;
@@ -1290,7 +1290,7 @@
 
 /* code for modal box1 */
 
-.modal {
+.SettingsModal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -1303,7 +1303,7 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-.modal-content {
+.SettingsModalContent {
     position: absolute;
     top: 25%;
     left: 13%;
@@ -1373,8 +1373,7 @@
     color:rgba(255,255,255,1);
     line-height:0px;
 }
-#item_modal {
-
+#TestJigSelectList {
     position:absolute;
     width:219px;
     height:32px;

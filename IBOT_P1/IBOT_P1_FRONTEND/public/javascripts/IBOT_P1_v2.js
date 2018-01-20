@@ -1,8 +1,42 @@
 var modal1 = document.getElementById('myModal1');
 var modal = document.getElementById('myModal');
 var modal2 = document.getElementById('myModal2');
-var setting=document.getElementById('setting_icon');
-setting.onclick=function () {
+
+var testCaseData;
+var testJigData;
+var testJigList;
+var loadedTestCase;
+var PreviousTestcase;
+var PreviousTestCaseButtonId;
+var testResultDetail;
+var testResultSummary;
+var lastTestCaseFlag;
+var loadedBoardData;
+
+function checkIfAllCasesRan(){
+
+}
+
+function UpdateTestResults(testCaseId,result){
+//update Result Summary & Details
+}
+
+
+function LoadTestJigData() {
+    //Initialize Test Jig Data
+    //Initialize Test Case Data
+}
+
+function ReloadTestJigData(TestJigType){
+    //Set TestJigType in the backend
+    //LoadTestJigData
+}
+
+function UpdateTestJigData(){
+    //Set TestJigType in the backend
+    //LoadTestJigData
+}
+function DisplaySettingsModal() {
     modal.style.display = "block";
 }
 function closeBarcodeModal()
@@ -25,7 +59,7 @@ function closeSettingsModal()
 {
     modal.style.display = "none";
 }
-var TestCaseData;
+
 function settings()
 {
     console.log("sending null req");
@@ -45,21 +79,21 @@ function settings()
                 console.log(TestCaseData);
                 var totalCases = Object.keys(TestCaseData).length;
 
-                document.getElementById('currently_tested_board').value = jsonresponse.testjig;
+                document.getElementById('TestJigType').value = jsonresponse.testjig;
                 document.getElementById('case_text_box').value = totalCases;
                 LoadTestCase(TestCaseData[0].TCID,'tc1');
             }
             else
             {
                 var error=jsonresponse.error;
-                document.getElementById('currently_tested_board').value = error;
+                document.getElementById('TestJigType').value = error;
             }
         }
     };
     xhttp.send();
 }
 
-function barcodeScanner()
+function ScanBarCode()
 {
     modal1.style.display = "block";
     var barcode="dmantztk20-01-181.12.2";
@@ -98,7 +132,7 @@ function reset() {
     document.getElementById("fail_text_box").value = "";
     document.getElementById("inner_table").value = "";
 }
-var PreviousTestcaseData,pid;
+
 function LoadTestCase(tcid,id)
 {
     var PreviousTestcaseData,pid;
@@ -106,7 +140,7 @@ function LoadTestCase(tcid,id)
     {
         if (tcid == TestCaseData[i].TCID)
         {
-            var LoadedTestcase=TestCaseData[i];
+            LoadedTestcase=TestCaseData[i];
             PreviousTestcaseData=LoadedTestcase;
             pid=id;
             console.log(LoadedTestcase);
@@ -174,7 +208,7 @@ function startTesting()
 
 
 
-function retryTesting()
+function retryTestCase()
 {
     document.getElementById('retry_icon').style.pointerEvents="none";
     document.getElementById('start_icon').style.pointerEvents="none";

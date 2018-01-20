@@ -3,28 +3,31 @@
     <link rel="stylesheet" href="stylesheets/IBOT_P1_v2.css"/>
     <script src="javascripts/IBOT_P1_v2.js" async differ></script>
 </head>
-<body onload="datetime(); settings();">
+<body onload="DisplayTimeIPInfo(); LoadTestJigData();">
 <div id="document">
 <div id="vertical">
-<div id="table">
+<div id="TestJigHeadLine">
 </div>
-    <div id="Ibot"></div>
+    <div id="IbotLogo"></div>
     <button id="Test_jig">
         TEST JIG
     </button>
-    <input type="text" id="currently_tested_board" readonly/>
+    <input type="text" id="TestJigType" readonly/>
     <div id="box" readonly>
         <div id=date_time >Date&Time:</div>
         <div id="ip_adress">IPadress:xxxxx</div>
     </div>
-    <img id="setting_icon" src="images/setting.png">
-    <div id="myModal" class="modal">
-        <div class="modal-content">
+    <img id="setting_icon" src="images/setting.png" onclick="DisplaySettingsModal()">
+    <div id="SettingsModalID" class="SettingsModal">
+        <div class="SettingsModalContent">
                 
             <button id="pcb_modal">
                 1.PCB TYPE
             </button>
-            <select id="item_modal">
+            <!-- //TODO Load TestJig Types from Backend
+                 //TODO On Change It should Reload TestJigData From Backend
+            -->
+            <select id="TestJigSelectList" onchange="ReloadTestJigData(this.selected)">
                 <option value="">select JIG Type
                 </option>
                 <option>
@@ -37,7 +40,12 @@
                     Item3
                 </option>
             </select>
+            <!-- //TODO Add UpdateTestJigData Option
+            -->
+
             <span class="close" onclick="closeSettingsModal()">&times;</span>
+           <!-- //TODO Check if OK and CLEAR BUTTONS ARE REDUNDANT
+           -->
             <button id="ok_modal" >OK</button>
             <button id="clear_modal">CLEAR</button>
         </div>
@@ -45,10 +53,10 @@
     <svg id="svg_1">
         <line id="line_1" x1="0" x2="670" y1="0" y2="2" />
     </svg>
-    <button id="case">
+    <button id="TotalCases">
         Total Cases
     </button>
-    <input type="text" id="case_text_box" readonly/>
+    <input type="text" id="totalCasesTxtBox" readonly/>
     <button id="tested">
         Tested
     </button>
@@ -64,9 +72,9 @@
     <svg id="svg_2">
         <line id="line_2" x1="0" x2="672" y1="5" y2="0" />
     </svg>
-    <button id="sn">SN:XXXXXXXX&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;MFGDT:DD-MM-YY&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;HW Ver: XXX&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SW Ver:XXX&nbsp; &nbsp;
+    <button id="BoardDetail">SN:XXXXXXXX&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;MFGDT:DD-MM-YY&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;HW Ver: XXX&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SW Ver:XXX&nbsp; &nbsp;
     </button>
-    <div id="scanner_image" onclick="barcodeScanner()"></div>
+    <div id="scanner_image" onclick="ScanBarCode()"></div>
 
     <div id="inner_table">
         <input type="text" id="testcase_id" readonly/>
@@ -76,7 +84,7 @@
 
     </div>
     <div id="start_icon" onclick="RunTestCase(TestCaseData[0].TCID)" disabled></div>
-    <div id="retry_icon" onclick="retryTesting()" disabled></div>
+    <div id="retry_icon" onclick="retryTestCase()" disabled></div>
     <div id="next_icon" onclick="nextTestcase()" disabled></div>
     <button id="tc1" onclick="LoadTestCase(TestCaseData[0].TCID,this.id)">
         TC1
