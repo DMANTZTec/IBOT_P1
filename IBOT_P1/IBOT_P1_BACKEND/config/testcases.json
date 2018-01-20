@@ -7,5 +7,5 @@
     {"TCID":"TC4","TC_NM":"testcase4","TC_DESC":"This is testcase4","test":"good"},
     {"TCID":"TC5","TC_NM":"testcase5","TC_DESC":"This is testcase5","test":"good"},
     {"TCID":"TC6","TC_NM":"testcase6","TC_DESC":"This is testcase6","test":"good"}
-]
+  ]
 }

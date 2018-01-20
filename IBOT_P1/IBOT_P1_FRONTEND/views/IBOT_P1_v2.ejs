@@ -3,21 +3,21 @@
     <link rel="stylesheet" href="stylesheets/IBOT_P1_v2.css"/>
     <script src="javascripts/IBOT_P1_v2.js" async differ></script>
 </head>
-<body  onload="datetime()">
+<body onload="datetime(); settings();">
 <div id="document">
 <div id="vertical">
 <div id="table">
 </div>
     <div id="Ibot"></div>
-    <button id="Test_jig" onclick="testJig()">
+    <button id="Test_jig">
         TEST JIG
     </button>
-    <input type="text" id="currently_tested_board">
-    <div id="box">
+    <input type="text" id="currently_tested_board" readonly/>
+    <div id="box" readonly>
         <div id=date_time >Date&Time:</div>
         <div id="ip_adress">IPadress:xxxxx</div>
     </div>
-    <img id="setting_icon" src="images/setting.png" onclick="settings()">
+    <img id="setting_icon" src="images/setting.png">
     <div id="myModal" class="modal">
         <div class="modal-content">
                 
@@ -25,72 +25,75 @@
                 1.PCB TYPE
             </button>
             <select id="item_modal">
-                <option>
-                    Item 1
+                <option value="">select JIG Type
                 </option>
                 <option>
-                    Item 2
+                    Item1
                 </option>
                 <option>
-                    Item 3
+                    Item2
+                </option>
+                <option>
+                    Item3
                 </option>
             </select>
-
             <span class="close" onclick="closeSettingsModal()">&times;</span>
             <button id="ok_modal" >OK</button>
             <button id="clear_modal">CLEAR</button>
         </div>
     </div>
-
-
     <svg id="svg_1">
         <line id="line_1" x1="0" x2="670" y1="0" y2="2" />
     </svg>
     <button id="case">
         Total Cases
     </button>
-    <input type="text" id="case_text_box"/>
+    <input type="text" id="case_text_box" readonly/>
     <button id="tested">
         Tested
     </button>
-    <input type="text" id="tested_text_box"/>
+    <input type="text" id="tested_text_box" readonly/>
     <button id="success">
         Success
     </button>
-    <input type="text" id="success_text_box"/>
+    <input type="text" id="success_text_box" readonly/>
     <button id="fail">
         Fail
     </button>
-    <input type="text" id="fail_text_box"/>
+    <input type="text" id="fail_text_box" readonly/>
     <svg id="svg_2">
         <line id="line_2" x1="0" x2="672" y1="5" y2="0" />
     </svg>
-    <button id="sn">
-        SN:XXXXXXXX&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;MFGDT:DD-MM-YY&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;HW Ver: XXX&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SW Ver:XXX&nbsp; &nbsp;
+    <button id="sn">SN:XXXXXXXX&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;MFGDT:DD-MM-YY&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;HW Ver: XXX&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SW Ver:XXX&nbsp; &nbsp;
     </button>
     <div id="scanner_image" onclick="barcodeScanner()"></div>
 
     <div id="inner_table">
+        <input type="text" id="testcase_id" readonly/>
+        <input type="text" id="testcase_nm" readonly/>
+        <input type="text" id="testcase_desc"readonly/>
+        <div id="message"></div>
+
     </div>
-    <div id="start_icon" onclick="startTesting()" disabled></div>
+    <div id="start_icon" onclick="RunTestCase(TestCaseData[0].TCID)" disabled></div>
     <div id="retry_icon" onclick="retryTesting()" disabled></div>
     <div id="next_icon" onclick="nextTestcase()" disabled></div>
-    <button id="tc1">
+    <button id="tc1" onclick="LoadTestCase(TestCaseData[0].TCID,this.id)">
         TC1
     </button>
-    <button id="tc2">
+    <button id="tc2" onclick="LoadTestCase(TestCaseData[1].TCID,this.id)">
         TC2
     </button>
-    <button id="tc3">
+    <button id="tc3" onclick="LoadTestCase(TestCaseData[2].TCID,this.id)">
         TC3
     </button>
-    <button id="tc4">
+    <button id="tc4" onclick="LoadTestCase(TestCaseData[3].TCID,this.id)">
         TC4
     </button>
-    <button id="tc5">
+    <button id="tc5" onclick="LoadTestCase(TestCaseData[4].TCID,this.id)">
         TC5
     </button>
-    <button id="tc6">
+    <button id="tc6" onclick="LoadTestCase(TestCaseData[5].TCID,this.id)">
         TC6
     </button>
     <button id="view_results" onclick="viewResults()">
