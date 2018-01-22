@@ -1,11 +1,11 @@
 {
   "testcases":
   [
-    {"TCID":"TC1","TC_NM":"testcase1","TC_DESC":"This is testcase1","test":"good"},
-    {"TCID":"TC2","TC_NM":"testcase2","TC_DESC":"This is testcase2","test":"good"},
-    {"TCID":"TC3","TC_NM":"testcase3","TC_DESC":"This is testcase3","test":"good"},
-    {"TCID":"TC4","TC_NM":"testcase4","TC_DESC":"This is testcase4","test":"good"},
+    {"TCID":"TC1","TC_NM":"testcase1","TC_DESC":"This is testcase1","test":"bad"},
+    {"TCID":"TC2","TC_NM":"testcase2","TC_DESC":"This is testcase2","test":"bad"},
+    {"TCID":"TC3","TC_NM":"testcase3","TC_DESC":"This is testcase3","test":"bad"},
+    {"TCID":"TC4","TC_NM":"testcase4","TC_DESC":"This is testcase4","test":"bad"},
     {"TCID":"TC5","TC_NM":"testcase5","TC_DESC":"This is testcase5","test":"good"},
     {"TCID":"TC6","TC_NM":"testcase6","TC_DESC":"This is testcase6","test":"good"}
-]
+  ]
 }

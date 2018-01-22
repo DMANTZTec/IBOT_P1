@@ -27,17 +27,8 @@
             <!-- //TODO Load TestJig Types from Backend
                  //TODO On Change It should Reload TestJigData From Backend
             -->
-            <select id="TestJigSelectList" onchange="ReloadTestJigData(this.selected)">
+            <select id="TestJigSelectList" onchange="ReloadTestJigData(this.value)">
                 <option value="">select JIG Type
-                </option>
-                <option>
-                    Item1
-                </option>
-                <option>
-                    Item2
-                </option>
-                <option>
-                    Item3
                 </option>
             </select>
             <!-- //TODO Add UpdateTestJigData Option
@@ -76,32 +67,38 @@
     </button>
     <div id="scanner_image" onclick="ScanBarCode()"></div>
 
-    <div id="inner_table">
+    <!--<div id="inner_table">
         <input type="text" id="testcase_id" readonly/>
         <input type="text" id="testcase_nm" readonly/>
         <input type="text" id="testcase_desc"readonly/>
         <div id="message"></div>
 
     </div>
-    <div id="start_icon" onclick="RunTestCase(TestCaseData[0].TCID)" disabled></div>
+    -->
+    <div id="inner_table">
+    <textarea id="TestCaseTitle">              TCID: 1   Test Case Name</textarea>
+    <textarea id="TestCaseRunText">This Test Case is to check if HDMI Connection is working or Not.
+      </textarea>
+    </div>
+    <div id="start_icon" onclick="RunTestCase(testCaseData[0].TCID)" disabled></div>
     <div id="retry_icon" onclick="retryTestCase()" disabled></div>
     <div id="next_icon" onclick="nextTestcase()" disabled></div>
-    <button id="tc1" onclick="LoadTestCase(TestCaseData[0].TCID,this.id)">
+    <button id="tc1" onclick="LoadTestCase(testCaseData.TestCases[0].TCID,this.id)">
         TC1
     </button>
-    <button id="tc2" onclick="LoadTestCase(TestCaseData[1].TCID,this.id)">
+    <button id="tc2" onclick="LoadTestCase(testCaseData.TestCases[1].TCID,this.id)">
         TC2
     </button>
-    <button id="tc3" onclick="LoadTestCase(TestCaseData[2].TCID,this.id)">
+    <button id="tc3" onclick="LoadTestCase(testCaseData.TestCases[2].TCID,this.id)">
         TC3
     </button>
-    <button id="tc4" onclick="LoadTestCase(TestCaseData[3].TCID,this.id)">
+    <button id="tc4" onclick="LoadTestCase(testCaseData.TestCases[3].TCID,this.id)">
         TC4
     </button>
-    <button id="tc5" onclick="LoadTestCase(TestCaseData[4].TCID,this.id)">
+    <button id="tc5" onclick="LoadTestCase(testCaseData.TestCases[4].TCID,this.id)">
         TC5
     </button>
-    <button id="tc6" onclick="LoadTestCase(TestCaseData[5].TCID,this.id)">
+    <button id="tc6" onclick="LoadTestCase(testCaseData.TestCases[5].TCID,this.id)">
         TC6
     </button>
     <button id="view_results" onclick="viewResults()">
@@ -116,7 +113,7 @@
             SCAN BARCODE.
             <button id="ok_modal1" onclick="OKButtonForBarcode()">OK</button>
 
-            <span class="close1" onclick="closeBarcodeModal">&times;</span>
+            <span class="close1" onclick="closeBarcodeModal()">&times;</span>
 
         </div>
     </div>

@@ -15,7 +15,7 @@ var barcodeScanner_v2=require('./routes/barcodeScanner_v2');
 var jigType_v2=require('./routes/jigType_v2');
 var startTesting_v2=require('./routes/startTesting_v2');
 var nextTestcase_v2=require('./routes/nextTestcase_v2');
-var settings_v2=require('./routes/settings_v2');
+var LoadTestJigData_BE=require('./routes/LoadTestJigData_BE');
 
 var app = express();
 
@@ -46,7 +46,7 @@ app.use('/barcodeScanner_v2', barcodeScanner_v2);
 app.use('/jigType_v2',jigType_v2);
 app.use('/startTesting_v2',startTesting_v2);
 app.use('/nextTestcase_v2',nextTestcase_v2);
-app.use('/settings_v2',settings_v2);
+app.use('/LoadTestJigData_BE',LoadTestJigData_BE);
 
 /*var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
