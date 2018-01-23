@@ -62,7 +62,6 @@ router.all('/Reload_BE', function(req, res, next)
                 });
         }
     });
-
     var response={"success":"success",TestJigData:TestJigData};
     console.log(response);
 

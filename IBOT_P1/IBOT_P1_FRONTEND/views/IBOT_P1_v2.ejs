@@ -76,13 +76,13 @@
     </div>
     -->
     <div id="inner_table">
-    <textarea id="TestCaseTitle">              TCID: 1   Test Case Name</textarea>
-    <textarea id="TestCaseRunText">This Test Case is to check if HDMI Connection is working or Not.
+    <textarea id="TestCaseTitle" readonly> TCID: 1   Test Case Name</textarea>
+    <textarea id="TestCaseRunText" readonly>This Test Case is to check if HDMI Connection is working or Not.
       </textarea>
     </div>
     <div id="start_icon" onclick="RunTestCase(testCaseData[0].TCID)" disabled></div>
     <div id="retry_icon" onclick="retryTestCase()" disabled></div>
-    <div id="next_icon" onclick="nextTestcase()" disabled></div>
+    <div id="next_icon" onclick="nextTestCase()" disabled></div>
     <button id="tc1" onclick="LoadTestCase(testCaseData.TestCases[0].TCID,this.id)">
         TC1
     </button>
@@ -121,6 +121,7 @@
     <!-- code for second modal. -->
     <div id="myModal2" class="second-modal">
         <div class="modal_content">
+            <div id="show"></div>
             <span class="close2" onclick="closeViewResultsModal()">&times;</span>
         </div>
     </div>

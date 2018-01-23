@@ -918,6 +918,10 @@
     background-position:50% 50%;
     cursor: pointer;
 }
+#buttons{
+    position:absolute;
+}
+
 #tc1 {
     position:absolute;
     width:88px;
@@ -1642,12 +1646,12 @@
 }
 #TestCaseTitle
 {
-    width:524px;
-    height:119px;
-    left:94px;
-    top:219px;
+    width:80%;
+    height:15%;
+    left:200px;
+    top:300px;
     opacity:1;
-    margin-left:0px;
+    margin-left:10%;
     margin-top:0px;
     margin-right:0px;
     margin-bottom:0px;
@@ -1676,7 +1680,7 @@
     -moz-border-top-right-radius:4px;
     -ms-border-top-right-radius:4px;
     -o-border-top-right-radius:4px;
-    overflow:visible;
+    overflow:hidden;
     background:#fff;
     border-color:#686868;
     border-style:solid;
@@ -1685,17 +1689,20 @@
     font-weight:bold;
     color:rgba(23,101,140,1);
     line-height:19px;
+    text-align: center;
+    resize: none;
+
 
 }
 
 #TestCaseRunText
 {
-    width:264px;
-    height:37px;
+    width:80%;
+    height:85%;
     left:354px;
     top:266px;
     opacity:1;
-    margin-left:0px;
+    margin-left:10%;
     margin-top:0px;
     margin-right:0px;
     margin-bottom:0px;
@@ -1724,7 +1731,7 @@
     -moz-border-top-right-radius:4px;
     -ms-border-top-right-radius:4px;
     -o-border-top-right-radius:4px;
-    overflow:visible;
+    overflow:hidden;
     background:#fff;
     border-color:#686868;
     border-style:solid;
@@ -1733,5 +1740,6 @@
     font-weight:bold;
     color:rgba(23,101,140,1);
     line-height:19px;
-
+    text-align: center;
+    resize: none;
 }

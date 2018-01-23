@@ -18,6 +18,47 @@ var tested=[];
 var success=0;
 var failed=0;
 var attempts=0;
+var TestResultDetails=
+{
+    "DUT_ID": 1,
+    "DUT_HW_VER": "XX:YY",
+    "DUT_SW_VER": "PP:QQ",
+    "DUT_NM": "Contol Card",
+    "SN":"XXXXXXX",
+    "HW_VER":"XX:XX",
+    "SW_VER":"XX:XX",
+    "MFGDT":"DD-MON-YYYY",
+    "TestCaseFile":"TestCaseFile.JSON",
+    "TEST_START_TS":"STARTTIMESTAMP",
+    "TEST_END_TS":"ENDTIMESTAMP",
+    "TEST_DURATION":"Test Duration In MilliSeconds",
+    "TEST_RESULT": "SUCCESS/FAIL",
+    "TOTAL_CNT":5,
+    "TESTED_CNT": 4,
+    "SUCCESS_CNT": 3,
+    "FAIL_CNT":1,
+    "DETAILS":
+    [
+        {
+            "TCID":1,
+            "TCSHORTNM":"XXXXX",
+            "DESC":"YYYYY",
+            "LAST_STATUS":"SUCCESS/FAIL",
+            "TRY_CNT":5,
+            "SUCCESS_CNT":4,
+            "FAIL_CNT":1
+        },
+        {
+            "TCID":2,
+            "TCSHORTNM":"XXXXX",
+            "DESC":"YYYYY",
+            "LAST_STATUS":"SUCCESS/FAIL",
+            "TRY_CNT":5,
+            "SUCCESS_CNT":4,
+            "FAIL_CNT":1
+        }
+    ]
+};
 
 function LoadTestJigData() {
     //Initialize Test Jig Data
@@ -42,8 +83,15 @@ function LoadTestJigData() {
                 var totalCases = Object.keys(testCaseData.TestCases).length;
                 document.getElementById('TestJigType').value = testJigData.DUT_NM;
                 document.getElementById('totalCasesTxtBox').value = totalCases;
-                var select = document.getElementById ("TestJigSelectList");
-                var selectOption = select.options [select.selectedIndex] .value;
+                console.log(testCaseData.TestCases.length);
+                /*var  position= document.getElementById("buttons");
+                for(i=0;i<testCaseData.TestCases.length;i++)
+                {
+                    var button = document.createElement("BUTTON").setAttribute("id",'tc1').appendChild();
+                    position.appendChild(button);
+                }*/
+                //var select = document.getElementById ("TestJigSelectList");
+                //var selectOption = select.options [select.selectedIndex] .value;
                     LoadTestCase(testCaseData.TestCases[0].TCID, 'tc1');
             }
             else
@@ -85,7 +133,6 @@ function DisplaySettingsModal()
     modal.style.display = "block";
     type.innerHTML="";
     for (var i = 0; i < testJigList.TestJigList.length; i++) {
-        //type.text=testJigList.TestJigList[i].DUT_ID;
         type.innerHTML = type.innerHTML +
             '<option value="' + testJigList.TestJigList[i]['DUT_ID'] + '">' +
           testJigList.TestJigList[i]['DUT_ID'] + '</option>';
@@ -113,10 +160,7 @@ function OKButtonForBarcode()
 {
     modal1.style.display = "none";
 }
-function viewResults()
-{
-    modal2.style.display = "block";
-}
+
 function closeViewResultsModal()
 {
     modal2.style.display = "none";
@@ -163,6 +207,19 @@ function reset() {
     document.getElementById("fail_text_box").value = "";
     document.getElementById("inner_table").value = "";
 }
+function nextTestCase()
+{
+    var NextTestcase;
+    for(i=0;i<testCaseData.TestCases.length;i++)
+    {
+        if(testCaseData.TestCases[i].TCID==LoadedTestcase.TCID)
+        {
+            NextTestcase=testCaseData.TestCases[i+1];
+            console.log(NextTestcase);
+        }
+    }
+    LoadTestCase(NextTestcase.TCID,'tc2');
+}
 function LoadTestCase(tcid,id)
 {
     if(PreviousTestcase==undefined){}
@@ -176,9 +233,9 @@ function LoadTestCase(tcid,id)
             PreviousTestcase=LoadedTestcase;
             PreviousTestCaseButtonId=id;
             console.log(LoadedTestcase);
-            document.getElementById('testcase_id').value = LoadedTestcase.TCID;
-            document.getElementById('testcase_nm').value = LoadedTestcase.TCSHORTNM;
-            document.getElementById('testcase_desc').value = LoadedTestcase.DESC;
+            document.getElementById('TestCaseTitle').value = "TCID:"+LoadedTestcase.TCID +"   "+ LoadedTestcase.TCSHORTNM;
+            //document.getElementById('testcase_nm').value = LoadedTestcase.TCSHORTNM;
+            document.getElementById('TestCaseRunText').value = LoadedTestcase.DESC;
             document.getElementById(id).style.background="orange";
         }
     }
@@ -279,7 +336,7 @@ function retryTestCase()
     };
     xhttp.send(params);
 }
-function nextTestcase()
+/*function nextTestcase()
 {
     var current_TC=document.getElementById('testcase_id').value;
     var xhttp = new XMLHttpRequest();
@@ -307,4 +364,33 @@ function nextTestcase()
         }
     };
     xhttp.send(params);
+}
+*/
+function viewResults()
+{
+    modal2.style.display = "block";
+    console.log(TestResultDetails.DETAILS);
+    var txt;
+    //document.getElementById('show').innerHTML="teja";
+    txt += "<table border='1'  id='table'>" +
+        "<tr><th>TID</th>" +
+        "<th>TESTCASE</th>" +
+        "<th>TESTCASE</th>" +
+        "<th>TESTCASE</th>" +
+        "<th>TESTCASE</th>" +
+        "<th>TESTCASE</th>" +
+        "<th>STATUS</th></tr>"
+    // document.getElementById("table").innerHTML += '<div class="d" style="border:1px solid";">';
+    for (x in TestResultDetails.DETAILS) {
+        txt += "<tr id='tr'><td>" + TestResultDetails.DETAILS[x].TCID + "</td>" +
+            "<td>" +TestResultDetails.DETAILS[x].TCSHORTNM +"</td>"+
+        "<td>"+TestResultDetails.DETAILS[x].DESC+"</td>"+
+            "<td>"+TestResultDetails.DETAILS[x].LAST_STATUS+"</td>"+
+            "<td>"+TestResultDetails.DETAILS[x].TRY_CNT+"</td>"+
+            "<td>"+TestResultDetails.DETAILS[x].SUCCESS_CNT+"</td>"+
+            "<td>"+TestResultDetails.DETAILS[x].FAIL_CNT+"</td>"+
+            "</tr>";
+    }
+    txt += "</table>"
+    document.getElementById("show").innerHTML = txt;
 }
