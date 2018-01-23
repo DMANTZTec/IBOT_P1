@@ -7,7 +7,8 @@ var type = document.getElementById('TestJigSelectList');
 var testCaseData;
 var testJigData;
 var testJigList;
-var loadedTestCase;
+var LoadedTestCase;
+var CurrentTestCaseData;
 var PreviousTestcase;
 var PreviousTestCaseButtonId;
 var testResultDetail;
@@ -19,46 +20,46 @@ var success=0;
 var failed=0;
 var attempts=0;
 var TestResultDetails=
-{
-    "DUT_ID": 1,
-    "DUT_HW_VER": "XX:YY",
-    "DUT_SW_VER": "PP:QQ",
-    "DUT_NM": "Contol Card",
-    "SN":"XXXXXXX",
-    "HW_VER":"XX:XX",
-    "SW_VER":"XX:XX",
-    "MFGDT":"DD-MON-YYYY",
-    "TestCaseFile":"TestCaseFile.JSON",
-    "TEST_START_TS":"STARTTIMESTAMP",
-    "TEST_END_TS":"ENDTIMESTAMP",
-    "TEST_DURATION":"Test Duration In MilliSeconds",
-    "TEST_RESULT": "SUCCESS/FAIL",
-    "TOTAL_CNT":5,
-    "TESTED_CNT": 4,
-    "SUCCESS_CNT": 3,
-    "FAIL_CNT":1,
-    "DETAILS":
-    [
-        {
-            "TCID":1,
-            "TCSHORTNM":"XXXXX",
-            "DESC":"YYYYY",
-            "LAST_STATUS":"SUCCESS/FAIL",
-            "TRY_CNT":5,
-            "SUCCESS_CNT":4,
-            "FAIL_CNT":1
-        },
-        {
-            "TCID":2,
-            "TCSHORTNM":"XXXXX",
-            "DESC":"YYYYY",
-            "LAST_STATUS":"SUCCESS/FAIL",
-            "TRY_CNT":5,
-            "SUCCESS_CNT":4,
-            "FAIL_CNT":1
-        }
-    ]
-};
+    {
+        "DUT_ID": 1,
+        "DUT_HW_VER": "XX:YY",
+        "DUT_SW_VER": "PP:QQ",
+        "DUT_NM": "Contol Card",
+        "SN":"XXXXXXX",
+        "HW_VER":"XX:XX",
+        "SW_VER":"XX:XX",
+        "MFGDT":"DD-MON-YYYY",
+        "TestCaseFile":"TestCaseFile.JSON",
+        "TEST_START_TS":"STARTTIMESTAMP",
+        "TEST_END_TS":"ENDTIMESTAMP",
+        "TEST_DURATION":"Test Duration In MilliSeconds",
+        "TEST_RESULT": "SUCCESS/FAIL",
+        "TOTAL_CNT":5,
+        "TESTED_CNT": 4,
+        "SUCCESS_CNT": 3,
+        "FAIL_CNT":1,
+        "DETAILS":
+            [
+                {
+                    "TCID":1,
+                    "TCSHORTNM":"XXXXX",
+                    "DESC":"YYYYY",
+                    "LAST_STATUS":"SUCCESS/FAIL",
+                    "TRY_CNT":5,
+                    "SUCCESS_CNT":4,
+                    "FAIL_CNT":1
+                },
+                {
+                    "TCID":2,
+                    "TCSHORTNM":"XXXXX",
+                    "DESC":"YYYYY",
+                    "LAST_STATUS":"SUCCESS/FAIL",
+                    "TRY_CNT":5,
+                    "SUCCESS_CNT":4,
+                    "FAIL_CNT":1
+                }
+            ]
+    };
 
 function LoadTestJigData() {
     //Initialize Test Jig Data
@@ -96,7 +97,7 @@ function LoadTestJigData() {
             }
             else
             {
-                var error=jsonresponse.error;
+                var error=response.error;
                 document.getElementById('TestJigType').value = error;
             }
         }
@@ -106,22 +107,25 @@ function LoadTestJigData() {
 function ReloadTestJigData(TestJigType){
     //Set TestJigType in the backend
     //LoadTestJigData
-    console.log("reload");
-    console.log(TestJigType);
     var xhttp = new XMLHttpRequest();
     var url = "http://localhost:3001/LoadTestJigData_BE/Reload_BE";
-    xhttp.open("POST", url, false);
+    xhttp.open("POST", url, true);
     var request={"TestJigType":TestJigType};
     var params = JSON.stringify(request);
     console.log(params);
     var params = "inputJsonStr" + "=" + params;
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onreadystatechange = function () {
+        if ((this.readyState == 4) && (this.status == 200)) {
+            console.log("after getting response" + xhttp.responseText);
+            var response=JSON.parse(xhttp.responseText);
+            if(response.success=="success") {
+                LoadTestJigData();
+            }
+        }
+    };
     xhttp.send(params);
-    var response=JSON.parse(xhttp.responseText);
-    console.log(response);
-    if(response.success=="success") {
-        LoadTestJigData();
-    }
+
     /*
     xhttp.onreadystatechange = function () {
         if ((this.readyState == 4) && (this.status == 200)){
@@ -142,6 +146,7 @@ function DisplaySettingsModal()
 {
     modal.style.display = "block";
     type.innerHTML="";
+    type.innerHTML = '<option>' + "SelectJigType" + '</option>';
     for (var i = 0; i < testJigList.TestJigList.length; i++) {
         type.innerHTML = type.innerHTML +
             '<option value="' + testJigList.TestJigList[i]['DUT_ID'] + '">' +
@@ -197,6 +202,7 @@ function ScanBarCode()
     document.getElementById('next_icon').style.pointerEvents="auto";
     //document.getElementById('scanner_image').style.pointerEvents="none";
 }
+var x = new Date();
 function DisplayTimeIPInfo()
 {
     var strcount;
@@ -222,7 +228,7 @@ function nextTestCase()
     var NextTestcase;
     for(i=0;i<testCaseData.TestCases.length;i++)
     {
-        if(testCaseData.TestCases[i].TCID==LoadedTestcase.TCID)
+        if(testCaseData.TestCases[i].TCID==LoadedTestCase.TCID)
         {
             NextTestcase=testCaseData.TestCases[i+1];
             console.log(NextTestcase);
@@ -239,28 +245,157 @@ function LoadTestCase(tcid,id)
     {
         if (tcid == testCaseData.TestCases[i].TCID)
         {
-            LoadedTestcase=testCaseData.TestCases[i];
-            PreviousTestcase=LoadedTestcase;
+            LoadedTestCase=testCaseData.TestCases[i];
+            LoadedTestCase.TCStatus="loaded";
+            LoadedTestCase.TCStartTime="";
+            LoadedTestCase.TCEndTime="";
+            LoadedTestCase.NumberOfSteps="";
+            LoadedTestCase.LastRunStep="";
+            LoadedTestCase.UILabelID="";
+
+            PreviousTestcase=LoadedTestCase;
             PreviousTestCaseButtonId=id;
-            console.log(LoadedTestcase);
-            document.getElementById('TestCaseTitle').value = "TCID:"+LoadedTestcase.TCID +"   "+ LoadedTestcase.TCSHORTNM;
-            //document.getElementById('testcase_nm').value = LoadedTestcase.TCSHORTNM;
-            document.getElementById('TestCaseRunText').value = LoadedTestcase.DESC;
+            console.log(LoadedTestCase);
+            document.getElementById('TestCaseTitle').value = "TCID:"+LoadedTestCase.TCID +"   "+ LoadedTestCase.TCSHORTNM;
+            //document.getElementById('testcase_nm').value = LoadedTestCase.TCSHORTNM;
+            document.getElementById('TestCaseRunText').value = LoadedTestCase.DESC;
             document.getElementById(id).style.background="orange";
         }
     }
 }
-function RunTestCase(tcid)
+function YesButtonForTestCase() {
+
+}
+function NOButtonForTestCase() {
+
+}
+function RunTestCase(tcid,StepNum)
 {
     console.log(tcid);
+    LoadedTestCase.TCStartTime=x;
+    console.log(LoadedTestCase);
+    var DUTID_TCID=testCaseData.DUT +"_"+ tcid;
+    console.log(DUTID_TCID);
+    switch (DUTID_TCID)
+    {
+        case "M10_1" :
+        {
+            console.log("M10_1 selected");
+            switch (StepNum)
+            {
+                case 1 :
+                    console.log("Check if HDMI Cable is Connected");
+                    var modal = document.getElementById('TestcasesModalId');
+                    modal.style.display = "block";
+                    document.getElementById("show").innerHTML = "Check if HDMI Cable is Connected";
+                    document.getElementById('TestcasesModalYesBtnId').onclick=function () {
+                        console.log("clicked");
+                        var xhttp = new XMLHttpRequest();
+                        var url = "http://localhost:3001/RunTestCase_BE";
+                        var request =
+                            {
+                                DUTID_TCID: DUTID_TCID, StepNum: StepNum
+                            };
+                        var params = JSON.stringify(request);
+                        console.log(params);
+                        var params = "inputJsonStr" + "=" + params;
+                        xhttp.open("POST", url, false);
+                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhttp.onreadystatechange = function () {
+                            if ((this.readyState == 4) && (this.status == 200)) {
+                                console.log("after getting response" + xhttp.responseText);
+                            }
+                        };
+                        xhttp.send(params);
+                    }
+                    setTimeout(function () {modal.style.display = "none";}, 5000);
+
+            }
+            break;
+        }
+        case "M10_2" :
+        {
+            console.log("M10_2 selected");
+            switch (StepNum)
+            {
+                case 1 :
+                    console.log("Push the power button");
+                    var modal=document.getElementById('TestcasesModalId');
+                    modal.style.display="block";
+                    document.getElementById("show").innerHTML="Push the power button";
+                    document.getElementById('TestcasesModalYesBtnId').onclick=function () {
+                        console.log("clicked");
+                        var xhttp = new XMLHttpRequest();
+                        var url = "http://localhost:3001/RunTestCase_BE";
+                        var request =
+                            {
+                                DUTID_TCID: DUTID_TCID, StepNum: StepNum
+                            };
+                        var params = JSON.stringify(request);
+                        console.log(params);
+                        var params = "inputJsonStr" + "=" + params;
+                        xhttp.open("POST", url, true);
+                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhttp.onreadystatechange = function () {
+                            if ((this.readyState == 4) && (this.status == 200)) {
+                                console.log("after getting response" + xhttp.responseText);
+                            }
+                        };
+                        xhttp.send(params);
+                    }
+                    setTimeout(function(){ modal.style.display="none"; }, 5000);
+                    break;
+                case "2" :
+                    console.log("Is the Power LED Turned Green?");
+                    var modal=document.getElementById('TestcasesModalId');
+                    modal.style.display="block";
+                    document.getElementById("show").innerHTML="Is the Power LED Turned Green?";
+                    setTimeout(function(){ modal.style.display="none"; }, 5000);
+                    break;
+            }
+            break;
+        }
+        case "CC_1":
+        {
+            console.log("CC_1 selected");
+            switch(StepNum)
+            {
+                case "1":
+                    console.log("CC_1 step 1");
+                    break;
+                case "2":
+                    console.log("CC_1 step 2");
+                    break;
+            }
+            break;
+        }
+        case "CC_2":
+        {
+            switch(StepNum)
+            {
+                case "1":{
+                    console.log("CC_2 step 1");
+                    break;
+                }
+                case "2":{
+                    console.log("CC_2 step 2");
+                    break;
+                }
+                case "3":{
+                    console.log("CC_2 step 3");
+                    break;
+                }
+            }
+            break;
+        }
+    }
     document.getElementById('start_icon').style.pointerEvents="none";
     document.getElementById('next_icon').style.pointerEvents="none";
-    var current_TC=document.getElementById('testcase_id').value;
     var xhttp = new XMLHttpRequest();
-    var url = "http://localhost:3001/startTesting_v2";
+    var url = "http://localhost:3001/RunTestCase_BE";
     var request =
         {
-            testcase_id:current_TC
+            DUTID_TCID:DUTID_TCID,StepNum:StepNum
         };
     var params = JSON.stringify(request);
     console.log(params);
@@ -273,20 +408,21 @@ function RunTestCase(tcid)
         {
             console.log("after getting response" + xhttp.responseText);
             var status=JSON.parse(this.responseText);
+            LoadedTestCase.TCEndTime=x;
             attempts=attempts+1;
                 if (!tested.includes(request.testcase_id)) {
                     tested.push(request.testcase_id);
                     if(status.status=="success")
                     {
                         success = success + 1;
-                        document.getElementById('message').innerHTML=current_TC +
-                            "  tested successfully enter next button to test next testcase";
+                        //document.getElementById('message').innerHTML=current_TC +
+                        //    "  tested successfully enter next button to test next testcase";
                         document.getElementById('success_text_box').value=success;
                     }
                     else
                     {
-                        document.getElementById('message').innerHTML=current_TC +
-                            "  testing failed click on retry icon to retest or click on next icon to test next testcase";
+                        //document.getElementById('message').innerHTML=current_TC +
+                         //   "  testing failed click on retry icon to retest or click on next icon to test next testcase";
                         failed=failed+1;
                         document.getElementById('fail_text_box').value=failed;
                     }
@@ -299,7 +435,7 @@ function RunTestCase(tcid)
            // document.getElementById('tested_text_box').value=tested;
             document.getElementById('retry_icon').style.pointerEvents="auto";
             document.getElementById('next_icon').style.pointerEvents="auto";
-            document.getElementById('start_icon').style.pointerEvents="auto";
+            document.getElementById('start_icon').style.pointerEvents="none";
         }
     };
     xhttp.send(params);

@@ -13,7 +13,7 @@ var barcode=require('./routes/barcode');
 var testing=require('./routes/testing');
 var barcodeScanner_v2=require('./routes/barcodeScanner_v2');
 var jigType_v2=require('./routes/jigType_v2');
-var startTesting_v2=require('./routes/startTesting_v2');
+var RunTestCase_BE=require('./routes/RunTestCase_BE');
 var nextTestcase_v2=require('./routes/nextTestcase_v2');
 var LoadTestJigData_BE=require('./routes/LoadTestJigData_BE');
 
@@ -44,7 +44,7 @@ app.use('/testing', testing);
 app.use('/barcode', barcode);
 app.use('/barcodeScanner_v2', barcodeScanner_v2);
 app.use('/jigType_v2',jigType_v2);
-app.use('/startTesting_v2',startTesting_v2);
+app.use('/RunTestCase_BE',RunTestCase_BE);
 app.use('/nextTestcase_v2',nextTestcase_v2);
 app.use('/LoadTestJigData_BE',LoadTestJigData_BE);
 

@@ -3,7 +3,7 @@ var router = express.Router();
 var fs=require('fs');
 
 var TestJigList=require('../TestJigList.json');
-var TestJigData=require('../TestJigData.json');
+//var TestJigData=require('../TestJigData.json');
 var TestCaseData=require('../TestCaseData.json');
 var TestJigType;
 var testJigConfigFileNm = './TestJigData.json';
@@ -26,15 +26,16 @@ router.all('/', function(req, res, next) {
             };
         res.send(response);
     }
-    else {
+    else
+        {
         console.log( testJigConfigFileNm + "does not exist");
         response = {"status": "error", "error": "test jig file not exists"};
         res.send(response);
     }
 });
 //This route is used when user selects a different Test Jig type from Settings in UI
-router.all('/Reload_BE', function(req, res, next) {
-
+router.all('/Reload_BE', function(req, res, next)
+{
     console.log('Enter: Route /Reload_BE');
     //var testJigConfigFileNm = 'TestJigData.json';
     var newTestJigConfigFileNm;
@@ -42,30 +43,32 @@ router.all('/Reload_BE', function(req, res, next) {
     var jsonrequest = JSON.parse(request);
     TestJigType = jsonrequest.TestJigType;
     console.log(TestJigType);
-    for (var i = 0; i < TestJigList.TestJigList.length; i++) {
+    for (var i = 0; i < TestJigList.TestJigList.length; i++)
+    {
         console.log('Looping through' + i);
-        if (TestJigType == TestJigList.TestJigList[i].DUT_ID) {
+        if (TestJigType == TestJigList.TestJigList[i].DUT_ID)
+        {
             newTestJigConfigFileNm = TestJigList.TestJigList[i].DESC_FILE;
             console.log(newTestJigConfigFileNm);
             break;
         }
     }
     //Take Backup of Current TestJigData file
-    if (fs.existsSync(testJigConfigFileNm)) {
-        console.log("TestJigData.json exits");
+    if (fs.existsSync(testJigConfigFileNm))
+    {
+        console.log("TestJigData.json exists");
         fs.rename(testJigConfigFileNm, testJigConfigFileNm + '.bkup');
     }
-    else {
+    else
+        {
         console.log('There is no current TestJigData.json file');
     }
-    fs.copyFileSync(newTestJigConfigFileNm, testJigConfigFileNm);
-
+    //fs.copyFileSync(newTestJigConfigFileNm, testJigConfigFileNm);
+    fs.createReadStream(newTestJigConfigFileNm).pipe(fs.createWriteStream(testJigConfigFileNm));
     var response={"success":"success"};
     //var response={"success":"success",TestJigData:TestJigData};
     console.log(response);
-
     res.send(response);
-
 });
 
     /*
