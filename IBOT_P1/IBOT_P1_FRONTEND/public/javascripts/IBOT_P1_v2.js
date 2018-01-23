@@ -110,12 +110,19 @@ function ReloadTestJigData(TestJigType){
     console.log(TestJigType);
     var xhttp = new XMLHttpRequest();
     var url = "http://localhost:3001/LoadTestJigData_BE/Reload_BE";
-    xhttp.open("POST", url, true);
+    xhttp.open("POST", url, false);
     var request={"TestJigType":TestJigType};
     var params = JSON.stringify(request);
     console.log(params);
     var params = "inputJsonStr" + "=" + params;
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(params);
+    var response=JSON.parse(xhttp.responseText);
+    console.log(response);
+    if(response.success=="success") {
+        LoadTestJigData();
+    }
+    /*
     xhttp.onreadystatechange = function () {
         if ((this.readyState == 4) && (this.status == 200)){
             console.log("after getting response" + xhttp.responseText);
@@ -125,8 +132,11 @@ function ReloadTestJigData(TestJigType){
                 LoadTestJigData();
             }
             }
+
     };
     xhttp.send(params);
+    */
+
 }
 function DisplaySettingsModal()
 {
