@@ -10,6 +10,16 @@ router.all('/', function(req, res, next)
     var DUTID_TCID=jsonrequest.DUTID_TCID;
     var StepNum=jsonrequest.StepNum;
     console.log(DUTID_TCID + StepNum);
+    function Success()
+    {
+        var response={"status":"success"};
+        res.send(response);
+    }
+    function Failed()
+    {
+        var response={"status":"Failed"};
+        res.send(response);
+    }
     switch (DUTID_TCID)
     {
         case "M10_1" :
@@ -19,8 +29,7 @@ router.all('/', function(req, res, next)
             {
                 case 1 :
                     console.log("Check if HDMI Cable is Connected");
-                    var response={status:"success"};
-                    res.send(response);
+                    Success();
                     break;
             }
             break;
@@ -30,11 +39,13 @@ router.all('/', function(req, res, next)
             console.log("M10_2 selected");
             switch (StepNum)
             {
-                case "1" :
+                case 1 :
                     console.log("Push the power button");
+                    Success();
                     break;
-                case "2" :
+                case 2 :
                     console.log("Is the Power LED Turned Green?");
+                    Success();
                     break;
             }
             break;
@@ -44,10 +55,14 @@ router.all('/', function(req, res, next)
             console.log("CC_1 selected");
             switch(StepNum)
             {
-                case "1":
+                case 1:
                     console.log("CC_1 step 1");
-                case "2":
+                    Success();
+                    break;
+                case 2:
                     console.log("CC_1 step 2");
+                    Success();
+                    break;
             }
             break;
         }
@@ -56,14 +71,20 @@ router.all('/', function(req, res, next)
             console.log("CC_2 selected");
             switch(StepNum)
             {
-                case "1":{
+                case 1:{
                     console.log("CC_2 step 1");
+                    Success();
+                    break;
                 }
-                case "2":{
+                case 2:{
                     console.log("CC_2 step 2");
+                    Success();
+                    break;
                 }
-                case "3":{
+                case 3:{
                     console.log("CC_2 step 3");
+                    Success();
+                    break;
                 }
             }
             break;

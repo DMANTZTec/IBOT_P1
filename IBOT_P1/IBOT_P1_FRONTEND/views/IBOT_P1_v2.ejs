@@ -83,7 +83,8 @@
     <div id="start_icon" onclick="RunTestCase(LoadedTestCase.TCID,LoadedTestCase.Steps[0].StepNumber)" disabled></div>
     <div id="retry_icon" onclick="retryTestCase()" disabled></div>
     <div id="next_icon" onclick="nextTestCase()" disabled></div>
-    <button id="tc1" onclick="LoadTestCase(testCaseData.TestCases[0].TCID,this.id)">
+    <div id="tc"></div>
+    <!--<button id="tc1" onclick="LoadTestCase(testCaseData.TestCases[0].TCID,this.id)">
         TC1
     </button>
     <button id="tc2" onclick="LoadTestCase(testCaseData.TestCases[1].TCID,this.id)">
@@ -101,6 +102,7 @@
     <button id="tc6" onclick="LoadTestCase(testCaseData.TestCases[5].TCID,this.id)">
         TC6
     </button>
+    -->
     <button id="view_results" onclick="viewResults()">
         View Results
     </button>
@@ -128,8 +130,10 @@
     <!-- end of code for first modal. -->
     <!-- code for second modal. -->
     <div id="myModal2" class="second-modal">
-        <div class="modal_content">
-            <div id="show"></div>
+        <div class="modal_content2">
+            <div id="show1"></div>
+            <div id="uploaddata"></div>
+            <button id="UPLOAD" onclick="Upload()">UPLOAD</button>
             <span class="close2" onclick="closeViewResultsModal()">&times;</span>
         </div>
     </div>

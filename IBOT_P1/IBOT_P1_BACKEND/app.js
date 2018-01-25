@@ -16,6 +16,7 @@ var jigType_v2=require('./routes/jigType_v2');
 var RunTestCase_BE=require('./routes/RunTestCase_BE');
 var nextTestcase_v2=require('./routes/nextTestcase_v2');
 var LoadTestJigData_BE=require('./routes/LoadTestJigData_BE');
+var ViewResults_BE=require('./routes/ViewResults_BE');
 
 var app = express();
 
@@ -47,6 +48,7 @@ app.use('/jigType_v2',jigType_v2);
 app.use('/RunTestCase_BE',RunTestCase_BE);
 app.use('/nextTestcase_v2',nextTestcase_v2);
 app.use('/LoadTestJigData_BE',LoadTestJigData_BE);
+app.use('/ViewResults_BE',ViewResults_BE);
 
 /*var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");

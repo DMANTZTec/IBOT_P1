@@ -4,17 +4,28 @@ var fs=require('fs');
 
 var TestJigList=require('../TestJigList.json');
 //var TestJigData=require('../TestJigData.json');
-var TestCaseData=require('../TestCaseData.json');
+//var TestCaseData=require('../TestCaseData.json');
 var TestJigType;
+//var testCaseConfigFileNm='./TestCaseData.json';
 var testJigConfigFileNm = './TestJigData.json';
-router.all('/', function(req, res, next) {
+router.all('/', function(req, res, next)
+{
     /*
     fs.stat('TestJigData.json', function(err, stat) {
         if(err == null) {
     */
     console.log(testJigConfigFileNm);
-    if (fs.existsSync(testJigConfigFileNm)) {
+    //console.log(testCaseConfigFileNm);
+    if (fs.existsSync(testJigConfigFileNm))
+    {
         var TestJigData = JSON.parse(fs.readFileSync(testJigConfigFileNm));
+        var TestCaseDataFileNm=TestJigData.TestCaseFile;
+        console.log(TestCaseDataFileNm);
+        if(fs.existsSync(TestCaseDataFileNm))
+        {
+            var TestCaseData=JSON.parse(fs.readFileSync(TestCaseDataFileNm));
+            console.log(TestCaseData);
+        }
         console.log("Test jig exists load");
         console.log(TestJigData);
         var response =
