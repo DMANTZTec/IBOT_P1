@@ -1,11 +1,11 @@
 {
-  "DUT":"M10",
+  "DUT":"IRNFC",
   "TestCases":[
     {
       "TCID":1,
-      "TCSHORTNM":"IRNFC HDM01",
+      "TCSHORTNM":"IRNFC1",
       "DESC":"IRNFC Test HDMI Interface",
-      "TYPE":"Manual",
+      "TYPE":"auto",
       "Steps" : [
         {
           "StepNumber": 1,
@@ -15,9 +15,9 @@
     },
     {
       "TCID":2,
-      "TCSHORTNM":"IRNFC HDM01",
+      "TCSHORTNM":"IRNFC2",
       "DESC":"IRNFC Test HDMI Interface",
-      "TYPE":"Manual",
+      "TYPE":"auto",
       "Steps" : [
         {
           "StepNumber": 1,
@@ -27,9 +27,9 @@
     },
     {
       "TCID":3,
-      "TCSHORTNM":"IRNFC HDM01",
+      "TCSHORTNM":"IRNFC3",
       "DESC":"IRNFC Test HDMI Interface",
-      "TYPE":"Manual",
+      "TYPE":"auto",
       "Steps" : [
         {
           "StepNumber": 1,
@@ -39,9 +39,9 @@
     },
     {
       "TCID":4,
-      "TCSHORTNM":"IRNFC PMIC",
+      "TCSHORTNM":"IRNFC4",
       "DESC":"IRNFC PM IC Voltage Test",
-      "TYPE":"Manual",
+      "TYPE":"auto",
       "Steps" : [
         {
           "StepNumber": 1,

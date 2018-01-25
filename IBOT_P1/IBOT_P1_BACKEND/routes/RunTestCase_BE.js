@@ -25,68 +25,61 @@ router.all('/', function(req, res, next)
         case "M10_1" :
         {
             console.log("M10_1 selected");
-            switch (StepNum)
-            {
-                case 1 :
                     console.log("Check if HDMI Cable is Connected");
                     Success();
                     break;
-            }
-            break;
+
         }
         case "M10_2" :
         {
             console.log("M10_2 selected");
-            switch (StepNum)
-            {
-                case 1 :
                     console.log("Push the power button");
-                    Success();
-                    break;
-                case 2 :
                     console.log("Is the Power LED Turned Green?");
                     Success();
                     break;
-            }
-            break;
         }
         case "CC_1":
         {
             console.log("CC_1 selected");
-            switch(StepNum)
-            {
-                case 1:
                     console.log("CC_1 step 1");
                     Success();
                     break;
-                case 2:
-                    console.log("CC_1 step 2");
-                    Success();
-                    break;
-            }
-            break;
         }
         case "CC_2":
         {
             console.log("CC_2 selected");
-            switch(StepNum)
-            {
-                case 1:{
-                    console.log("CC_2 step 1");
-                    Success();
-                    break;
-                }
-                case 2:{
-                    console.log("CC_2 step 2");
-                    Success();
-                    break;
-                }
-                case 3:{
-                    console.log("CC_2 step 3");
-                    Success();
-                    break;
-                }
-            }
+            console.log("Push the power button");
+            console.log("Is the Power LED Turned Green?");
+            Success();
+            break;
+        }
+        case "IRNFC_1":
+        {
+            console.log("IRNFC_1 selected");
+            console.log("CC_1 step 1");
+            Failed();
+            break;
+        }
+        case "IRNFC_2":
+    {
+        console.log("IRNFC_2 selected");
+        console.log("CC_1 step 1");
+        Success();
+        break;
+    }
+    case "IRNFC_3":
+    {
+        console.log("IRNFC_3 selected");
+        console.log("CC_1 step 1");
+        Success();
+        break;
+    }
+        case "IRNFC_4":
+        {
+            console.log("IRNFC_4 selected");
+            console.log("Push the power button");
+            console.log("Is the Power LED Turned Green?");
+            Success();
             break;
         }
     }
