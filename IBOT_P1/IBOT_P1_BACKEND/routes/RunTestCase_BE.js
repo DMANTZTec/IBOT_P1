@@ -74,7 +74,7 @@ router.all('/', function(req, res, next)
         Success();
         break;
     }
-        case "IRNFC_4":
+    case "IRNFC_4":
         {
             console.log("IRNFC_4 selected");
             console.log("Push the power button");
@@ -82,7 +82,14 @@ router.all('/', function(req, res, next)
             Success();
             break;
         }
+    case "ESR_1":
+    {
+        console.log("ESR_1 selected");
+        console.log("Just Sending Success");
+        Success();
+        break;
     }
+}
 });
 module.exports = router;
 

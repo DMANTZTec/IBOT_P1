@@ -10,7 +10,6 @@ var LoadedTestCase;
 var CurrentTestCaseData;
 var PreviousTestcase;
 var PreviousTestCaseButtonId;
-var testResultDetail;
 var testResultSummary={TotalCnt:0,TestedCnt:0,SuccessCnt:0,FailCnt:0};
 var lastTestCaseFlag;
 var loadedBoardData;
@@ -18,15 +17,36 @@ var testedTestCases=[];
 var testResultDetail={"DETAILS":[]};
 var TestResultDetails=
     {
-        "DUT_ID": testCaseData.DUT_ID,
+        "DUT_ID": "XXX",
         "DUT_HW_VER": "XX:YY",
         "DUT_SW_VER": "PP:QQ",
-        "DUT_NM": testCaseData.TCSHORTNM,
+        "DUT_NM": "SHORTNM",
         "SN":"XXXXXXX",
         "HW_VER":"XX:XX",
         "SW_VER":"XX:XX",
         "MFGDT":"DD-MON-YYYY",
-        "TestCaseFile":testJigData.TestCaseFile,
+        "TestCaseFile":"TestCaseFileName",
+        "TEST_START_TS":"STARTTIMESTAMP",
+        "TEST_END_TS":"ENDTIMESTAMP",
+        "TEST_DURATION":"Test Duration In MilliSeconds",
+        "TEST_RESULT": "SUCCESS/FAIL",
+        "TOTAL_CNT":testResultSummary.TotalCnt,
+        "TESTED_CNT": testResultSummary.TestedCnt,
+        "SUCCESS_CNT": testResultSummary.SuccessCnt,
+        "FAIL_CNT":testResultSummary.FailCnt,
+        "DETAILS": []
+    };
+var TestResultDetailsTemplate=
+    {
+        "DUT_ID": "XXX",
+        "DUT_HW_VER": "XX:YY",
+        "DUT_SW_VER": "PP:QQ",
+        "DUT_NM": "SHORTNM",
+        "SN":"XXXXXXX",
+        "HW_VER":"XX:XX",
+        "SW_VER":"XX:XX",
+        "MFGDT":"DD-MON-YYYY",
+        "TestCaseFile":"TestCaseFileName",
         "TEST_START_TS":"STARTTIMESTAMP",
         "TEST_END_TS":"ENDTIMESTAMP",
         "TEST_DURATION":"Test Duration In MilliSeconds",
@@ -44,7 +64,7 @@ function UpdateTestJigData(){
 
 function checkIfAllCasesRan()
 {
-    if(testedTestCases.length==testCaseData.TestCases.length){
+    if(testedTestCases.length===testCaseData.TestCases.length){
         document.getElementById('TestCaseRunText').value="All test cases had ran";
     }
 }
@@ -116,6 +136,8 @@ function LoadTestJigData() {
     //Initialize Test Jig Data
     //Initialize Test Case Data
     console.log("sending null req");
+    //Reset Test Result Details
+    TestResultDetails = TestResultDetailsTemplate;
     var xhttp = new XMLHttpRequest();
     var url = "http://localhost:3001/LoadTestJigData_BE";
     xhttp.open("POST", url, true);
@@ -131,6 +153,9 @@ function LoadTestJigData() {
                 testJigList=response.TestJigList;
                 testJigData=response.TestJigData;
                 testCaseData = response.TestCaseData;
+                testResultDetail.DUT_ID=testJigData.DUT_ID;
+                testResultDetail.DUT_NM = testJigData.DUT_NM;
+                testResultDetail.TestCaseFile = testJigData.TestCaseFile;
                 for(i=0;i<testCaseData.TestCases.length;i++)
                 {
                     testResultDetail.DETAILS.push({});
@@ -252,36 +277,39 @@ function LoadTestCase(tcid,id)
 function RunTestCase(tcid,StepNum)
 {
     console.log(tcid);
+    var tciModal = document.getElementById('TestcasesModalId');
+    var xhttp;
+    var url = "http://localhost:3001/RunTestCase_BE";
+    var response;
+    var result;
     LoadedTestCase.TCStartTime = x;
     console.log(LoadedTestCase);
     Disable();
     var DUTID_TCID = testCaseData.DUT + "_" + tcid;
-    console.log(DUTID_TCID);
+    var request =
+        {
+            DUTID_TCID: DUTID_TCID, StepNum: StepNum
+        };
+    var params = JSON.stringify(request);
+    params = "inputJsonStr" + "=" + params;
+    console.log(params);
     switch (DUTID_TCID)
     {
         case "M10_1" :
             console.log("M10_1 selected");
             console.log("Check if HDMI Cable is Connected");
-            var modal = document.getElementById('TestcasesModalId');
-            modal.style.display = "block";
+            tciModal.style.display = "block";
             document.getElementById("show").innerHTML = "Check if HDMI Cable is Connected";
             setTimeout(function ()
             {
-                modal.style.display = "none";
+                tciModal.style.display = "none";
                 LoadTestCase(LoadedTestCase.TCID, LoadedTestCase.UILabelID);
             }, 5000);
 
             document.getElementById('TestcasesModalYesBtnId').onclick = function () {
                 console.log("clicked yes");
-                var xhttp = new XMLHttpRequest();
-                var url = "http://localhost:3001/RunTestCase_BE";
-                var request =
-                    {
-                        DUTID_TCID: DUTID_TCID, StepNum: StepNum
-                    };
-                var params = JSON.stringify(request);
                 console.log(params);
-                var params = "inputJsonStr" + "=" + params;
+                xhttp = new XMLHttpRequest();
                 xhttp.open("POST", url, false);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send(params);
@@ -298,54 +326,37 @@ function RunTestCase(tcid,StepNum)
         case "M10_2" :
             console.log("M10_2 selected");
             console.log("Push the power button");
-            var modal = document.getElementById('TestcasesModalId');
-            modal.style.display = "block";
+            tciModal.style.display = "block";
             document.getElementById("show").innerHTML = "Push the power button";
             setTimeout(function () {
-                modal.style.display = "none";
+                tciModal.style.display = "none";
                 LoadTestCase(LoadedTestCase.TCID, LoadedTestCase.UILabelID);
             }, 5000);
             document.getElementById('TestcasesModalYesBtnId').onclick = function () {
                 console.log("clicked");
-                var xhttp = new XMLHttpRequest();
-                var url = "http://localhost:3001/RunTestCase_BE";
-                var request =
-                    {
-                        DUTID_TCID: DUTID_TCID, StepNum: StepNum
-                    };
-                var params = JSON.stringify(request);
+                xhttp = new XMLHttpRequest();
                 console.log(params);
-                var params = "inputJsonStr" + "=" + params;
                 xhttp.open("POST", url, false);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send(params);
                 console.log("after getting response" + xhttp.responseText);
                 var response = JSON.parse(xhttp.responseText);
                 var result=response.status;
-                if (result != "success") {
+                if (result !== "success") {
                     UpdateTestResults(tcid,result);
                 }
                 else {
                     console.log("Is the Power LED Turned Green?");
-                    var modal = document.getElementById('TestcasesModalId');
-                    modal.style.display = "block";
+                    tciModal.style.display = "block";
                     document.getElementById("show").innerHTML = "Is the Power LED Turned Green?";
                     setTimeout(function () {
-                        modal.style.display = "none";
+                        tciModal.style.display = "none";
                         LoadTestCase(LoadedTestCase.TCID, LoadedTestCase.UILabelID);
                     }, 5000);
                     document.getElementById('TestcasesModalYesBtnId').onclick = function () {
-                        modal.style.display = "none";
+                        tciModal.style.display = "none";
                         console.log("clicked");
-                        var xhttp = new XMLHttpRequest();
-                        var url = "http://localhost:3001/RunTestCase_BE";
-                        var request =
-                            {
-                                DUTID_TCID: DUTID_TCID, StepNum: StepNum
-                            };
-                        var params = JSON.stringify(request);
-                        console.log(params);
-                        var params = "inputJsonStr" + "=" + params;
+                        xhttp = new XMLHttpRequest();
                         xhttp.open("POST", url, false);
                         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                         xhttp.send(params);
@@ -364,21 +375,13 @@ function RunTestCase(tcid,StepNum)
         case "CC_1":
             console.log("CC_1 selected");
             console.log("CC_1 step 1");
-            var xhttp = new XMLHttpRequest();
-            var url = "http://localhost:3001/RunTestCase_BE";
-            var request =
-                {
-                    DUTID_TCID: DUTID_TCID, StepNum: StepNum
-                };
-            var params = JSON.stringify(request);
-            console.log(params);
-            var params = "inputJsonStr" + "=" + params;
+            xhttp = new XMLHttpRequest();
             xhttp.open("POST", url, false);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send(params);
             console.log("after getting response" + xhttp.responseText);
-            var response=JSON.parse(xhttp.responseText);
-            var result=response.status;
+            response=JSON.parse(xhttp.responseText);
+            result=response.status;
             UpdateTestResults(tcid,result);
             checkIfAllCasesRan();
             console.log(testResultDetail);
@@ -388,54 +391,36 @@ function RunTestCase(tcid,StepNum)
         case "CC_2":
             console.log("CC_2 step 1");
             console.log("Push the power button");
-            var modal = document.getElementById('TestcasesModalId');
-            modal.style.display = "block";
+            tciModalodal.style.display = "block";
             document.getElementById("show").innerHTML = "Push the power button";
             setTimeout(function () {
-                modal.style.display = "none";
+                tciModal.style.display = "none";
                 LoadTestCase(LoadedTestCase.TCID, LoadedTestCase.UILabelID);
             }, 5000);
             document.getElementById('TestcasesModalYesBtnId').onclick = function () {
                 console.log("clicked");
-                var xhttp = new XMLHttpRequest();
-                var url = "http://localhost:3001/RunTestCase_BE";
-                var request =
-                    {
-                        DUTID_TCID: DUTID_TCID, StepNum: StepNum
-                    };
-                var params = JSON.stringify(request);
-                console.log(params);
-                var params = "inputJsonStr" + "=" + params;
+                xhttp = new XMLHttpRequest();
                 xhttp.open("POST", url, false);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send(params);
                 console.log("after getting response" + xhttp.responseText);
                 var response = JSON.parse(xhttp.responseText);
                 var result=response.status;
-                if (result != "success") {
+                if (result !== "success") {
                     UpdateTestResults(tcid,result);
                 }
                 else {
                     console.log("Is the Power LED Turned Green?");
-                    var modal = document.getElementById('TestcasesModalId');
-                    modal.style.display = "block";
+                    tciModal.style.display = "block";
                     document.getElementById("show").innerHTML = "Is the Power LED Turned Green?";
                     setTimeout(function () {
-                        modal.style.display = "none";
+                        tciModal.style.display = "none";
                         LoadTestCase(LoadedTestCase.TCID, LoadedTestCase.UILabelID);
                     }, 5000);
                     document.getElementById('TestcasesModalYesBtnId').onclick = function () {
-                        modal.style.display = "none";
+                        tciModal.style.display = "none";
                         console.log("clicked");
-                        var xhttp = new XMLHttpRequest();
-                        var url = "http://localhost:3001/RunTestCase_BE";
-                        var request =
-                            {
-                                DUTID_TCID: DUTID_TCID, StepNum: StepNum
-                            };
-                        var params = JSON.stringify(request);
-                        console.log(params);
-                        var params = "inputJsonStr" + "=" + params;
+                        xhttp = new XMLHttpRequest();
                         xhttp.open("POST", url, false);
                         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                         xhttp.send(params);
@@ -453,21 +438,13 @@ function RunTestCase(tcid,StepNum)
             break;
         case "IRNFC_1":
             console.log("IRNFC TC1 selected");
-            var xhttp = new XMLHttpRequest();
-            var url = "http://localhost:3001/RunTestCase_BE";
-            var request =
-                {
-                    DUTID_TCID: DUTID_TCID, StepNum: StepNum
-                };
-            var params = JSON.stringify(request);
-            console.log(params);
-            var params = "inputJsonStr" + "=" + params;
+            xhttp = new XMLHttpRequest();
             xhttp.open("POST", url, false);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send(params);
             console.log("after getting response" + xhttp.responseText);
-            var response=JSON.parse(xhttp.responseText);
-            var result=response.status;
+            response=JSON.parse(xhttp.responseText);
+            result=response.status;
             UpdateTestResults(tcid,result);
             checkIfAllCasesRan();
             console.log(testResultDetail);
@@ -476,21 +453,13 @@ function RunTestCase(tcid,StepNum)
             break;
         case "IRNFC_2":
             console.log("IRNFC TC2 selected");
-            var xhttp = new XMLHttpRequest();
-            var url = "http://localhost:3001/RunTestCase_BE";
-            var request =
-                {
-                    DUTID_TCID: DUTID_TCID, StepNum: StepNum
-                };
-            var params = JSON.stringify(request);
-            console.log(params);
-            var params = "inputJsonStr" + "=" + params;
+            xhttp = new XMLHttpRequest();
             xhttp.open("POST", url, false);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send(params);
             console.log("after getting response" + xhttp.responseText);
-            var response=JSON.parse(xhttp.responseText);
-            var result=response.status;
+            response=JSON.parse(xhttp.responseText);
+            result=response.status;
             UpdateTestResults(tcid,result);
             checkIfAllCasesRan();
             console.log(testResultDetail);
@@ -499,94 +468,30 @@ function RunTestCase(tcid,StepNum)
             break;
         case "IRNFC_3":
         console.log("IRNFC TC3 selected");
-        var xhttp = new XMLHttpRequest();
-        var url = "http://localhost:3001/RunTestCase_BE";
-        var request =
-            {
-                DUTID_TCID: DUTID_TCID, StepNum: StepNum
-            };
-        var params = JSON.stringify(request);
-        console.log(params);
-        var params = "inputJsonStr" + "=" + params;
+        xhttp = new XMLHttpRequest();
         xhttp.open("POST", url, false);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send(params);
         console.log("after getting response" + xhttp.responseText);
-            var response=JSON.parse(xhttp.responseText);
-            var result=response.status;
+            response=JSON.parse(xhttp.responseText);
+            result=response.status;
             UpdateTestResults(tcid,result);
             checkIfAllCasesRan();
             console.log(testResultDetail);
             console.log(testResultSummary);
             Enable();
             break;
-        case "IRNFC_4":
-            console.log("IRNFC TC4");
-            console.log("Push the power button");
-            var modal = document.getElementById('TestcasesModalId');
-            modal.style.display = "block";
-            document.getElementById("show").innerHTML = "Push the power button";
-            setTimeout(function () {
-                modal.style.display = "none";
-                LoadTestCase(LoadedTestCase.TCID, LoadedTestCase.UILabelID);
-            }, 5000);
-            document.getElementById('TestcasesModalYesBtnId').onclick = function () {
-                console.log("clicked");
-                var xhttp = new XMLHttpRequest();
-                var url = "http://localhost:3001/RunTestCase_BE";
-                var request =
-                    {
-                        DUTID_TCID: DUTID_TCID, StepNum: StepNum
-                    };
-                var params = JSON.stringify(request);
-                console.log(params);
-                var params = "inputJsonStr" + "=" + params;
-                xhttp.open("POST", url, false);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send(params);
-                console.log("after getting response" + xhttp.responseText);
-                var response = JSON.parse(xhttp.responseText);
-                var result=response.status;
-                if (result != "success")
-                {
-                    UpdateTestResults(tcid,result);
-                }
-                else
-                    {
-                    console.log("Is the Power LED Turned Green?");
-                    var modal = document.getElementById('TestcasesModalId');
-                    modal.style.display = "block";
-                    document.getElementById("show").innerHTML = "Is the Power LED Turned Green?";
-                    setTimeout(function () {
-                        modal.style.display = "none";
-                        LoadTestCase(LoadedTestCase.TCID, LoadedTestCase.UILabelID);
-                    }, 5000);
-                    document.getElementById('TestcasesModalYesBtnId').onclick = function () {
-                        modal.style.display = "none";
-                        console.log("clicked");
-                        var xhttp = new XMLHttpRequest();
-                        var url = "http://localhost:3001/RunTestCase_BE";
-                        var request =
-                            {
-                                DUTID_TCID: DUTID_TCID, StepNum: StepNum
-                            };
-                        var params = JSON.stringify(request);
-                        console.log(params);
-                        var params = "inputJsonStr" + "=" + params;
-                        xhttp.open("POST", url, false);
-                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        xhttp.send(params);
-                        console.log("after getting response" + xhttp.responseText);
-                        var response=JSON.parse(xhttp.responseText);
-                        var result=response.status;
-                        UpdateTestResults(tcid,result);
-                        checkIfAllCasesRan();
-                        console.log(testResultDetail);
-                        console.log(testResultSummary);
-                        Enable();
-                    }
-                }
-            }
+        case "ESR_1":
+            console.log("ESR_1");
+            xhttp = new XMLHttpRequest();
+            xhttp.open("POST", url, false);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send(params);
+            console.log("after getting response" + xhttp.responseText);
+            response = JSON.parse(xhttp.responseText);
+            result=response.status;
+            UpdateTestResults(tcid,result);
+            Enable();
             break;
     }
 }
@@ -690,8 +595,15 @@ function closeSettingsModal()
 {
     modal.style.display = "none";
 }
-function ScanBarCode()
-{
+
+function readBarCode(barCodeText){
+    console.log(barCodeText);
+    var SN=barCodeText;
+    document.getElementById('BoardDetail').innerHTML=barCodeText;
+    modal1.style.display="none";
+}
+function ScanBarCode(){
+
     modal1.style.display = "block";
     var barcode="dmantztk20-01-181.12.2";
     var SN=barcode.slice(0,8);
@@ -702,7 +614,6 @@ function ScanBarCode()
     console.log(MFGDT);
     console.log(HWver);
     console.log(SWver);
-    document.getElementById('')
 
     document.getElementById("start_icon").style.pointerEvents="auto";
     document.getElementById('next_icon').style.pointerEvents="auto";
@@ -722,12 +633,16 @@ function displayDateTime()
     mytime=setTimeout('DisplayTimeIPInfo()',refresh)
 }
 function reset() {
+    /*
     document.getElementById("currently_tested_board").value = "";
     document.getElementById("case_text_box").value = "";
     document.getElementById("tested_text_box").value = "";
     document.getElementById("success_text_box").value = "";
     document.getElementById("fail_text_box").value = "";
     document.getElementById("inner_table").value = "";
+    */
+    document.location.reload(true);
+    LoadTestJigData();
 }
 
 function viewResults() {

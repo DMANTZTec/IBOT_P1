@@ -121,8 +121,12 @@
 
     <div id="myModal1" class="first-modal">
         <div class="modal-content">
-            Scan BarCode
+            Scan BarCode <br>
+
+                <input type="text" id="BarCodeInput"  onchange="readBarCode(this.value)" autofocus/>
+                <!--
             <button id="ok_modal1" onclick="OKButtonForBarcode()">OK</button>
+            -->
             <span class="close1" onclick="closeBarcodeModal()">&times;</span>
 
         </div>

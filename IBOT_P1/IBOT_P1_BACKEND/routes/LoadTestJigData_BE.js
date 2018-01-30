@@ -68,13 +68,16 @@ router.all('/Reload_BE', function(req, res, next)
     if (fs.existsSync(testJigConfigFileNm))
     {
         console.log("TestJigData.json exists");
-        fs.rename(testJigConfigFileNm, testJigConfigFileNm + '.bkup');
+        fs.renameSync(testJigConfigFileNm, testJigConfigFileNm + '.bkup');
     }
     else
         {
         console.log('There is no current TestJigData.json file');
     }
     //fs.copyFileSync(newTestJigConfigFileNm, testJigConfigFileNm);
+    var newCfgFile='./'+newTestJigConfigFileNm;
+    console.log('New TestJig Config File:' + newCfgFile);
+    //fs.createReadStream(newCfgFile).pipe(fs.createWriteStream(testJigConfigFileNm));
     fs.createReadStream(newTestJigConfigFileNm).pipe(fs.createWriteStream(testJigConfigFileNm));
     var response={"success":"success"};
     //var response={"success":"success",TestJigData:TestJigData};

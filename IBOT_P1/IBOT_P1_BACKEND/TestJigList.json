@@ -26,7 +26,7 @@
 },{
 "DUT_ID":"ESR",
 "DUT_NM":"ESR Board",
-"DESC_FILE":"TRIAC_TJ_Config.JSON"
+"DESC_FILE":"ESR_TJ_Config.JSON"
 }
 ]
 }
